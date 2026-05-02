@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Services — Growcept</title>
+<link rel="stylesheet" href="styles/tokens.css" />
+<link rel="stylesheet" href="styles/site.css?v=2" />
+<link rel="icon" type="image/png" href="assets/logo-mark.png" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="scripts/Shell.jsx"></script>
+<script type="text/babel" src="scripts/Illustrations.jsx"></script>
+<script type="text/babel" src="scripts/Home.jsx"></script>
+<script type="text/babel" src="scripts/Services.jsx"></script>
+<script type="text/babel">
+function App() {
+  React.useEffect(() => {
+    const refresh = () => window.lucide && window.lucide.createIcons();
+    refresh();
+    const id = setInterval(refresh, 600);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div data-screen-label="02 Services">
+      <Nav current="Services" />
+      <ServicesHero />
+
+      <ServiceDeep
+        id="training"
+        num="01 / Training"
+        icon="graduation-cap"
+        title="AI training for the whole org."
+        lead="We build role-based programs that turn each function into confident AI operators. No generic prompt courses — every track is scoped to the work people actually do."
+        deliverables={[
+          "Role-by-role curriculum",
+          "Live workshops + async lab",
+          "Internal trainer kit",
+          "Cohort-based delivery",
+          "Capstone tied to your KPIs",
+          "Adoption measurement",
+        ]}
+        outcomes={[
+          { k: "+34%", v: "Reported throughput in piloted workflows" },
+          { k: "92%", v: "Average completion across cohorts" },
+          { k: "6 wk", v: "From kickoff to first measurable impact" },
+        ]}
+        timeline="4–12 weeks per cohort"
+      />
+
+      <TrainingDeep />
+
+      <ServiceDeep
+        id="integration"
+        num="02 / Integration"
+        icon="git-branch"
+        title="Integrate AI where it earns its keep."
+        lead="We embed AI into the workflows that matter — support, sales, ops, marketing — and measure where it actually moves the needle. Tool-agnostic, ROI-led."
+        deliverables={[
+          "Workflow + opportunity map",
+          "Build / buy / hybrid decision",
+          "Vendor shortlist & evaluation",
+          "Pilot scope + measurement plan",
+          "Rollout plan with your team",
+          "Post-launch review",
+        ]}
+        outcomes={[
+          { k: "3–5", v: "AI moves identified per discovery" },
+          { k: "60d", v: "From decision to live pilot" },
+          { k: "1×", v: "Senior-led — no offshored juniors" },
+        ]}
+        timeline="8–16 weeks per pillar"
+        accent
+      />
+
+      <ServiceDeep
+        id="policy"
+        num="03 / Policy"
+        icon="shield-check"
+        title="Policy that engineers respect."
+        lead="Company-wide AI guidelines, acceptable-use policies, and risk frameworks that hold up to legal review and don't slow your teams down."
+        deliverables={[
+          "AI use policy document",
+          "Employee acceptable-use charter",
+          "Risk register + review cadence",
+          "Vendor / model evaluation rubric",
+          "Incident response playbook",
+          "Regulator-ready documentation",
+        ]}
+        outcomes={[
+          { k: "0", v: "Compliance gaps after handoff" },
+          { k: "100%", v: "Of policies adopted by leadership team" },
+          { k: "1", v: "Single source of truth for the org" },
+        ]}
+        timeline="6–10 weeks"
+      />
+
+      <EngagementModels />
+      <CTASection />
+      <Footer />
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

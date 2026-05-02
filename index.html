@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Growcept — AI consulting, training & integration</title>
+<link rel="stylesheet" href="styles/tokens.css" />
+<link rel="stylesheet" href="styles/site.css?v=2" />
+<link rel="icon" type="image/png" href="assets/logo-mark.png" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="scripts/tweaks-panel.jsx"></script>
+<script type="text/babel" src="scripts/Shell.jsx"></script>
+<script type="text/babel" src="scripts/Illustrations.jsx"></script>
+<script type="text/babel" src="scripts/Home.jsx"></script>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "cyan",
+  "headline": "default",
+  "heroVariant": "diagram",
+  "animation": "stacked",
+  "showQuote": true
+}/*EDITMODE-END*/;
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    document.documentElement.setAttribute("data-accent", tweaks.accent);
+  }, [tweaks.accent]);
+
+  React.useEffect(() => {
+    const refresh = () => window.lucide && window.lucide.createIcons();
+    refresh();
+    const id = setInterval(refresh, 600);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div data-screen-label="01 Home">
+      <Nav current="Home" />
+      <Hero heroVariant={tweaks.heroVariant} headline={tweaks.headline} animation={tweaks.animation} />
+      <TrustStrip />
+      <ServicesSection />
+      <TrainingSection />
+      <MethodologySection />
+      <NumbersSection />
+      {tweaks.showQuote && <QuoteSection />}
+      <FAQSection />
+      <CTASection />
+      <Footer />
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="Accent">
+          <TweakRadio value={tweaks.accent} onChange={v => setTweak("accent", v)}
+            options={[{ value: "cyan", label: "Cyan" }, { value: "evening", label: "Evening" }]} />
+        </TweakSection>
+        <TweakSection title="Headline copy">
+          <TweakRadio value={tweaks.headline} onChange={v => setTweak("headline", v)}
+            options={[
+              { value: "default", label: "AI-native" },
+              { value: "poetic",  label: "Grow with AI" },
+              { value: "direct",  label: "Less hype" },
+            ]} />
+        </TweakSection>
+        <TweakSection title="Hero data style">
+          <TweakRadio value={tweaks.animation} onChange={v => setTweak("animation", v)}
+            options={[
+              { value: "stacked", label: "Stacked" },
+              { value: "ribbon", label: "Ribbon" },
+              { value: "ticker", label: "Ticker" },
+            ]} />
+        </TweakSection>
+        <TweakSection title="Hero layout">
+          <TweakRadio value={tweaks.heroVariant} onChange={v => setTweak("heroVariant", v)}
+            options={[{ value: "diagram", label: "With diagram" }, { value: "centered", label: "Centered" }]} />
+        </TweakSection>
+        <TweakSection title="Sections">
+          <TweakToggle label="Show client quote" checked={tweaks.showQuote} onChange={v => setTweak("showQuote", v)} />
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
