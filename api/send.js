@@ -28,6 +28,7 @@ module.exports = async function handler(req, res) {
   await transporter.sendMail({
     from: `"Growcept Contact" <${process.env.GMAIL_USER}>`,
     to: process.env.GMAIL_USER,
+    cc: "chandangoopta@gmail.com",
     subject: `New brief from ${name}${company ? ` · ${company}` : ""}`,
     html: `<!DOCTYPE html>
 <html lang="en">
@@ -157,23 +158,19 @@ module.exports = async function handler(req, res) {
 
       <!-- Header -->
       <tr>
-        <td style="background:linear-gradient(135deg,#2FB7FF 0%,#11A1DE 100%);padding:40px 40px 36px;text-align:center">
-          <span style="font-family:'Helvetica Neue',Helvetica,sans-serif;font-weight:800;font-size:24px;color:#ffffff;letter-spacing:-0.02em">GROWCEPT</span>
-          <p style="margin:16px 0 0;color:rgba(255,255,255,0.9);font-size:16px;line-height:1.5">We've got your brief.</p>
-        </td>
-      </tr>
-
-      <!-- Check icon row -->
-      <tr>
-        <td align="center" style="padding:0">
-          <table cellpadding="0" cellspacing="0">
+        <td style="background:linear-gradient(135deg,#2FB7FF 0%,#11A1DE 100%);padding:36px 40px">
+          <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
-              <td style="background:linear-gradient(135deg,#2FB7FF 0%,#11A1DE 100%);width:64px;height:64px;border-radius:50%;text-align:center;vertical-align:middle;margin-top:-32px">
-                <!--[if !mso]><!-->
-                <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#2FB7FF 0%,#11A1DE 100%);display:flex;align-items:center;justify-content:center;margin-top:-32px;border:4px solid #ffffff">
-                  <span style="font-size:28px;color:#ffffff;line-height:1">✓</span>
-                </div>
-                <!--<![endif]-->
+              <td>
+                <span style="font-family:'Helvetica Neue',Helvetica,sans-serif;font-weight:800;font-size:22px;color:#ffffff;letter-spacing:-0.02em">GROWCEPT</span>
+              </td>
+              <td align="right">
+                <span style="display:inline-block;background:rgba(255,255,255,0.2);color:#ffffff;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px">&#10003; Brief Received</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="padding-top:12px">
+                <p style="margin:0;color:rgba(255,255,255,0.85);font-size:15px;line-height:1.5">Hi ${name.split(" ")[0]}, we've got your brief and will be in touch within 48 hours.</p>
               </td>
             </tr>
           </table>
@@ -182,26 +179,51 @@ module.exports = async function handler(req, res) {
 
       <!-- Body -->
       <tr>
-        <td style="padding:36px 40px 0;text-align:center">
-          <h1 style="margin:0 0 16px;font-family:'Helvetica Neue',Helvetica,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;color:#2C3638;line-height:1.1">
-            Hi ${name.split(" ")[0]}, you're in the queue.
-          </h1>
-          <p style="margin:0;font-size:16px;color:#505D5F;line-height:1.7;max-width:460px;margin:0 auto">
-            Thanks for reaching out. We've received your brief and one of our team will respond to you personally — usually within 48 hours.
+        <td style="padding:32px 40px 0">
+          <h2 style="margin:0 0 8px;font-family:'Helvetica Neue',Helvetica,sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.02em;color:#2C3638">You're in the queue.</h2>
+          <p style="margin:0;font-size:15px;color:#505D5F;line-height:1.7">
+            Thanks for reaching out. One of our team will respond to you personally — not a template — usually within 48 hours.
           </p>
         </td>
       </tr>
 
       <!-- Divider -->
-      <tr><td style="padding:32px 40px 0"><hr style="border:none;border-top:1px solid #DDE1E2;margin:0"></td></tr>
+      <tr><td style="padding:28px 40px 0"><hr style="border:none;border-top:1px solid #DDE1E2;margin:0"></td></tr>
 
-      <!-- Brief recap -->
+      <!-- Submission details -->
       <tr>
-        <td style="padding:28px 40px 0">
-          <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#8A9498">Your brief</p>
-          <div style="background:#F7F9FA;border-radius:12px;border-left:3px solid #2FB7FF;padding:18px 20px">
-            <p style="margin:0;font-size:14px;color:#505D5F;line-height:1.7;white-space:pre-wrap">${message}</p>
-          </div>
+        <td style="padding:24px 40px 0">
+          <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#8A9498">Your submission</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-radius:12px;border:1px solid #DDE1E2;overflow:hidden">
+            <tr style="background:#F7F9FA">
+              <td style="padding:12px 18px;font-size:12px;font-weight:700;color:#8A9498;text-transform:uppercase;letter-spacing:0.08em;width:110px;border-bottom:1px solid #DDE1E2">Name</td>
+              <td style="padding:12px 18px;font-size:14px;color:#2C3638;font-weight:600;border-bottom:1px solid #DDE1E2">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 18px;font-size:12px;font-weight:700;color:#8A9498;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid #DDE1E2">Email</td>
+              <td style="padding:12px 18px;font-size:14px;color:#2C3638;border-bottom:1px solid #DDE1E2">${email}</td>
+            </tr>
+            ${company ? `<tr style="background:#F7F9FA">
+              <td style="padding:12px 18px;font-size:12px;font-weight:700;color:#8A9498;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid #DDE1E2">Company</td>
+              <td style="padding:12px 18px;font-size:14px;color:#2C3638;border-bottom:1px solid #DDE1E2">${companyText}</td>
+            </tr>` : ""}
+            ${role ? `<tr>
+              <td style="padding:12px 18px;font-size:12px;font-weight:700;color:#8A9498;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid #DDE1E2">Role</td>
+              <td style="padding:12px 18px;font-size:14px;color:#2C3638;border-bottom:1px solid #DDE1E2">${roleText}</td>
+            </tr>` : ""}
+            <tr style="background:#F7F9FA">
+              <td style="padding:12px 18px;font-size:12px;font-weight:700;color:#8A9498;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid #DDE1E2">Scope</td>
+              <td style="padding:12px 18px;font-size:14px;color:#2C3638;border-bottom:1px solid #DDE1E2">${scopeText}</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 18px;font-size:12px;font-weight:700;color:#8A9498;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid #DDE1E2">Timeline</td>
+              <td style="padding:12px 18px;font-size:14px;color:#2C3638;border-bottom:1px solid #DDE1E2">${timelineText}</td>
+            </tr>
+            <tr style="background:#F7F9FA">
+              <td style="padding:12px 18px;font-size:12px;font-weight:700;color:#8A9498;text-transform:uppercase;letter-spacing:0.08em;vertical-align:top">Brief</td>
+              <td style="padding:12px 18px;font-size:14px;color:#505D5F;line-height:1.7;white-space:pre-wrap">${message}</td>
+            </tr>
+          </table>
         </td>
       </tr>
 
